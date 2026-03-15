@@ -317,6 +317,8 @@ public class GameManager : MonoBehaviour
         float approachTime = Mathf.Lerp(8f, 20f, 1f - (task.BaseSpeed - 0.4f) / 0.7f);
         yield return new WaitForSeconds(approachTime);
 
+        // Task may have been destroyed during the wait (Unity null), so bail out.
+        if (task == null) yield break;
         if (!task.IsActive) yield break;
 
         // Task reached the player – start overtime HP drain
