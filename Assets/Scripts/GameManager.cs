@@ -359,9 +359,20 @@ public class GameManager : MonoBehaviour
         switch (_mode)
         {
             case GameMode.TrapRace:
-                // First task to cross the finish line must be done
-                EndGame($"Task '{t.TaskName}' won the race! You must complete it.");
-                spawner.CleanupAll();
+                // Only end the game if the task actually finished the race
+                // (i.e., reached the finish line), not if it was defeated by traps.
+                // We treat progress ~1 as a completed race.
+                if (t != null && t.Progress >= 0.999f)
+                {
+                    // First task to cross the finish line must be done
+                    EndGame($"Task '{t.TaskName}' won the race! You must complete it.");
+                    spawner.CleanupAll();
+                }
+                else
+                {
+                    // Task was defeated before finishing the race: just clean it up.
+                    spawner.Cleanup(t);
+                }
                 return;
 
             case GameMode.Battle:
