@@ -105,9 +105,97 @@ Empty GameObject with:
 - `TaskSpawner` – assign `taskPrefab` and `taskParent` (TaskParent RectTransform).
 - `MenuController` – wire panel and button references.
 
+### Inspector Wiring Reference
+
+Use these tables as a checklist. For each component, select the listed GameObject in the Hierarchy, then drag the target object into the matching slot in the Inspector.
+
+---
+
+#### Systems GameObject – `GameManager` component
+
+| Inspector Header | Field | Drag this in |
+|-----------------|-------|--------------|
+| Core References | Spawner | `TaskSpawner` component on **Systems** |
+| Core References | Cooking Minigame | `CookingTowerMinigame` component on **Systems** |
+| Menu UI | Menu Panel | **MenuPanel** GameObject |
+| Menu UI | Todo Input | `InputField` (**TodoInput**) inside MenuPanel |
+| Menu UI | Mode Dropdown | `Dropdown` (**ModeDropdown**) inside MenuPanel |
+| Menu UI | Budget Dropdown | `Dropdown` (**BudgetDropdown**) inside MenuPanel |
+| Menu UI | Start Button | `Button` (**StartButton**) inside MenuPanel |
+| HUD UI | Hud Panel | **HUDPanel** GameObject |
+| HUD UI | Status Text | `Text` (**StatusText**) inside HUDPanel |
+| HUD UI | Health Text | `Text` (**HealthText**) inside HUDPanel |
+| HUD UI | Timer Text | `Text` (**TimerText**) inside HUDPanel |
+| HUD UI | Mode Label | `Text` (**ModeLabel**) inside HUDPanel |
+| HUD UI | Trap Button | `Button` (**TrapButton**) inside HUDPanel |
+| HUD UI | Trap Cooldown Text | `Text` (**TrapCooldownText**) inside HUDPanel |
+| HUD UI | Back To Menu Button | `Button` (**BackToMenuButton**) inside HUDPanel |
+| Battle HUD | Damage Boost Text | `Text` (**DamageBoostText**) inside HUDPanel |
+| Battle HUD | Loot Log Text | `Text` (**LootLogText**) inside HUDPanel |
+
+> **Dropdown option order matters** – the script reads `value` as an index.
+> - **ModeDropdown** options must be (index 0 → 2): `Trap Race`, `Battle`, `Cooking Tower`
+> - **BudgetDropdown** options must be (index 0 → 3): `Short (10m)`, `Medium (30m)`, `Long (60m)`, `Very Long`
+
+---
+
+#### Systems GameObject – `TaskSpawner` component
+
+| Inspector Header | Field | Drag this in |
+|-----------------|-------|--------------|
+| Prefab & Parent | Task Prefab | **TaskItem** prefab asset (from the Project window) |
+| Prefab & Parent | Task Parent | `RectTransform` (**TaskParent**) inside HUDPanel |
+
+---
+
+#### Systems GameObject – `MenuController` component
+
+| Inspector Header | Field | Drag this in |
+|-----------------|-------|--------------|
+| Panels | Main Menu Panel | **MenuPanel** GameObject |
+| Panels | Credits Panel | **CreditsPanel** GameObject |
+| Panels | How To Play Panel | **HowToPlayPanel** GameObject |
+| Main Menu Buttons | Credits Button | `Button` (**CreditsButton**) inside MenuPanel |
+| Main Menu Buttons | How To Play Button | `Button` (**HowToPlayButton**) inside MenuPanel |
+| Credits Panel | Close Credits Button | `Button` (**CloseCreditsButton**) inside CreditsPanel |
+| How-to-Play Panel | Close How To Play Button | `Button` (**CloseHowToPlayButton**) inside HowToPlayPanel |
+
+---
+
+#### Systems GameObject – `CookingTowerMinigame` component
+
+| Inspector Header | Field | Drag this in |
+|-----------------|-------|--------------|
+| UI References | Tower Parent | `RectTransform` (**TowerParent**) inside CookingTowerPanel |
+| UI References | Falling Block | `RectTransform` (**FallingBlock**) inside CookingTowerPanel |
+| UI References | Falling Label | `Text` (**FallingLabel**) — child of FallingBlock |
+| UI References | Result Text | `Text` (**ResultText**) inside CookingTowerPanel |
+| UI References | Bonus Time Text | `Text` (**BonusTimeText**) inside CookingTowerPanel |
+| UI References | Tower Height Text | `Text` (**TowerHeightText**) inside CookingTowerPanel |
+| UI References | Drop Button | `Button` (**DropButton**) inside CookingTowerPanel |
+| UI References | Cooking Panel | **CookingTowerPanel** GameObject (child of HUDPanel) |
+
+---
+
+#### TaskItem Prefab – `TaskItem` component
+
+Open the prefab in the Project window, then wire these fields on its `TaskItem` component:
+
+| Field | Drag this in |
+|-------|--------------|
+| Label Text | `Text` (**LabelText**) — child of the prefab root |
+| Health Text | `Text` (**HealthText**) — child of the prefab root |
+| Timer Text | `Text` (**TimerText**) — child of the prefab root |
+| Background Image | `Image` (**Background**) — child of the prefab root |
+| Health Bar Fill | `Image` (**HealthBarFill**) — child of the prefab root |
+| Progress Bar Fill | `Image` (**ProgressBarFill**) — child of the prefab root |
+| Click Button | `Button` on the **root** of the prefab |
+
+---
+
 ### Quick-start
-1. Create the scene layout above.
-2. Assign all serialised references in the Inspector.
+1. Build the scene hierarchy described above.
+2. Wire every Inspector field using the tables in **Inspector Wiring Reference**.
 3. Hit **Play**, type a few tasks (e.g. `Do laundry, Send email, Call mum`), choose a mode and budget, then click **Start**.
 
 ## Balancing Knobs (Inspector)
